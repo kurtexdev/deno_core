@@ -413,6 +413,10 @@ impl JsRealm {
     Ok(root_id)
   }
 
+  /// Removes the specified main module from the module map.
+  ///
+  /// This method will panic if the module is not found.
+  #[allow(clippy::unused_async)]
   pub(crate) async fn remove_main_es_module(
     &self,
     specifier: &ModuleSpecifier,
@@ -475,13 +479,17 @@ impl JsRealm {
     Ok(root_id)
   }
 
+  /// Removes the specified side module from the module map.
+  ///
+  /// This method will panic if the module is not found.
+  #[allow(clippy::unused_async)]
   pub(crate) async fn remove_side_es_module(
     &self,
     specifier: &ModuleSpecifier,
   ) -> Result<ModuleId, Error> {
     let module_map_rc = self.0.module_map();
     let removed_id = module_map_rc.remove_id(
-      &specifier.as_str(),
+      specifier.as_str(),
       RequestedModuleType::None,
       false,
     );
